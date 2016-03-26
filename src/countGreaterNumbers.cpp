@@ -14,12 +14,43 @@ ERROR CASES: Return NULL for invalid inputs.
 NOTES:
 */
 
+#include<stdlib.h>
 struct transaction {
 	int amount;
 	char date[11];
 	char description[20];
 };
+//time complexity is O(n),space complexity is O(1)
+int myAtoi(char *str)
+{
+	int result = 0;
+	for (int i = 0; str[i] != '\0'; ++i)
+		result = result * 10 + str[i] - '0';
+	return result;
+}
+int date_function(char *date)
+{
+	char *date1 = (char*)malloc(5);
+	int c = 0;
+	for (int i = 6; date[i] != '\0'; i++)
+	{
+		date1[c++] = date[i];
+	}
+	date1[c] = '\0';
+	int date2 = myAtoi(date1);
+	return date2;
+}
 
 int countGreaterNumbers(struct transaction *Arr, int len, char *date) {
-	return -1;
+	if (Arr == NULL)
+		return NULL;
+	int year, year1, count = 0;
+	year1 = date_function(date);
+	for (int i = 0; i<len; i++)
+	{
+		year = date_function(Arr[i].date);
+		if (year>year1)
+			count++;
+	}
+	return count;
 }
